@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: bisque; /* Add your desired background color here */
+        }
+
+        .converter-container {
+            text-align: center;
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: powderblue; /* Add background color to the container if needed */
+            padding: 20px; /* Add padding for better visual appearance */
+            border-radius: 8px; /* Add border-radius for rounded corners */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add box shadow for a subtle effect */
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+        }
+
+        input, select, button {
+            margin-bottom: 15px;
+            padding: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+    <title>Temperature Converter</title>
+</head>
+<body>
+    <div class="converter-container">
+        <label for="temperature">Enter Temperature:</label>
+        <input type="text" id="temperature" placeholder="Enter temperature" />
+
+        <label for="inputUnit">Choose Input Unit:</label>
+        <select id="inputUnit">
+            <option value="celsius">Celsius</option>
+            <option value="fahrenheit">Fahrenheit</option>
+            <option value="kelvin">Kelvin</option>
+        </select>
+
+        <label for="outputUnit">Choose Output Unit:</label>
+        <select id="outputUnit">
+            <option value="celsius">Celsius</option>
+            <option value="fahrenheit">Fahrenheit</option>
+            <option value="kelvin">Kelvin</option>
+        </select>
+
+        <button onclick="convertTemperature()">Convert</button>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function convertTemperature() {
+            const inputTemperature = document.getElementById('temperature').value;
+            const inputUnit = document.getElementById('inputUnit').value;
+            const outputUnit = document.getElementById('outputUnit').value;
+            const resultContainer = document.getElementById('result');
+
+            if (inputTemperature === '' || isNaN(inputTemperature)) {
+                alert('Please enter a valid number for temperature.');
+                return;
+            }
+
+            let convertedTemperature;
+
+            if (inputUnit === 'celsius' && outputUnit === 'fahrenheit') {
+                convertedTemperature = (parseFloat(inputTemperature) * 9/5) + 32;
+            } else if (inputUnit === 'fahrenheit' && outputUnit === 'celsius') {
+                convertedTemperature = (parseFloat(inputTemperature) - 32) * 5/9;
+            } else if (inputUnit === 'celsius' && outputUnit === 'kelvin') {
+                convertedTemperature = parseFloat(inputTemperature) + 273.15;
+            } else if (inputUnit === 'kelvin' && outputUnit === 'celsius') {
+                convertedTemperature = parseFloat(inputTemperature) - 273.15;
+            } else if (inputUnit === 'fahrenheit' && outputUnit === 'kelvin') {
+                convertedTemperature = (parseFloat(inputTemperature) - 32) * 5/9 + 273.15;
+            } else if (inputUnit === 'kelvin' && outputUnit === 'fahrenheit') {
+                convertedTemperature = (parseFloat(inputTemperature) - 273.15) * 9/5 + 32;
+            } else {
+                // If the input and output units are the same, do nothing
+                convertedTemperature = parseFloat(inputTemperature);
+            }
+
+            resultContainer.innerHTML = `Converted Temperature: ${convertedTemperature.toFixed(2)} ${outputUnit}`;
+        }
+    </script>
+</body>
+</html>
